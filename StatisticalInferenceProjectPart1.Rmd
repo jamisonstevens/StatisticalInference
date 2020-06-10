@@ -1,0 +1,105 @@
+---
+title: "Statistical Inference Project Part 1"
+author: "Jamison Stevens"
+date: "6/10/2020"
+geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+This project involves looking at the exponential distribution in R and comparing it with the Central Limit Theorem.  One thousand simulations will be don’t on the averages of forty exponential distributions.  The sample mean and variance will be compared to their theoretical values, and the distribution will be shown to be approximately normal.
+
+## Simulations
+
+In the simulations code, the constants for the simulations are defined.  Next, the code enters a for loop that executes the code it contains one thousand times.  The code inside the for loop uses rexp to perform one simulation of forty exponential distributions and the mean of the simulation result is put into a numeric vector.  After completing the for loop, the simulation number and result vector are used to create a data frame, named simDF.  The data inside of simDF is then summarized to get an idea of what is contained.
+
+```{r}
+  # Define Constants
+  lambda <- 0.2
+  numExp <- 40
+  simulations <- 1000
+  
+  # Simulations
+  meanExpSims <- c()
+  for (i in 1:simulations) {
+    sam <- rexp(numExp, lambda)
+    meanExpSims <- c(meanExpSims, mean(sam))
+  }
+  simDF <- data.frame(1:simulations, meanExpSims)
+  colnames(simDF) <- c("Simulation_Number", "Exponential_Distribution_Mean")
+  
+  # Summary of Exponential_Distribution_Mean data in simDF
+  summary(simDF$Exponential_Distribution_Mean)
+```
+
+## Sample Mean versus Theoretical Mean
+
+The first step in this code is calculating the theoretical mean of the exponential distribution, which is the reciprocal of lambda.  Next, the sample mean is calculated by taking the mean of the resulting value from each simulation.  After the theoretical and sample means are calculated, their values are printed, then the difference between the two values is displayed.  The purpose of this comparison is to explore whether the actual and theoretical centers of the data are approximately the same.
+
+```{r}
+  # Theoretical Mean
+  theoreticalMean <- 1 / lambda
+  
+  # Compare Theoretical and Sample Means
+  sampleMean <- mean(simDF$Exponential_Distribution_Mean)
+  
+  # Print Sample Mean
+  paste("Sample Mean:", sampleMean)
+  
+  # Print Theoretical Mean
+  paste("Theoretical Mean:", theoreticalMean)
+  
+  # Difference Between Sample and Theoretical Mean
+  paste("Difference in Means:", sampleMean - theoreticalMean)
+```
+
+The difference between the sample and theoretical means is close to zero, so the simulations approximate the expected value of forty exponential distributions.
+
+## Sample Variance versus Theoretical Variance
+
+The first step in this code is calculating the theoretical sample standard deviation and variance of the exponential distribution, which is the reciprocal of lambda and reciprocal of lambda squared, respectively.   Next, the theoretical variance is calculated by dividing the theoretical sample variance by the number of exponentials in one simulation.  The sample variance is calculated by finding the variance of each simulation's average value.  After the theoretical and sample variances are calculated, their values are printed, then the difference between the two values is displayed.  The purpose of this comparison is to explore whether the actual and theoretical variabilities of the data are approximately the same.
+
+```{r}
+  # Theoretical Sample Standard Deviation and Variance
+  theoreticalSamStDev <- 1 / lambda
+  theoreticalSamVariance <- theoreticalSamStDev^2
+  
+  # Theoretical Population Standard Deviation and Variance
+  theoreticalVariance <- theoreticalSamVariance / numExp
+  
+  # Compare Theoretical and Sample Variance
+  sampleVariance <- var(simDF$Exponential_Distribution_Mean)
+  
+  # Print Sample Variance
+  paste("Sample Variance:", sampleVariance)
+  
+  # Print Theoretical Variance
+  paste("Theoretical Variance:", theoreticalVariance)
+  
+  # Difference Between Sample and Theoretical Variance
+  paste("Difference in Variance:", sampleVariance - theoreticalVariance)
+```
+
+The difference between the sample variance and theoretical variance is close to zero, so the simulations approximate the variance of the expected value of forty exponential distributions.
+
+## Distribution
+
+This code creates a histogram of average value for each simulation that shows the frequency in terms of density.  Using lines, two curves were added to the graph: a blue density curve of the simulations and a red density curve for the expected distribution.
+
+```{r}
+  # Show Distribution is Approximately Normal
+  plotDensity <- hist(simDF$Exponential_Distribution_Mean, freq = FALSE, breaks = 30,
+      main = "Frequency of Means of Exponential Distribution Simulations", 
+      xlab = "Mean of Exponential Distribution Simulations")
+  lines(density(simDF$Exponential_Distribution_Mean), col = "blue")
+  x <- seq(2, 8, length.out= 1000)
+  y <- with(simDF, dnorm(x, theoreticalMean, sqrt(theoreticalVariance)))
+  lines(x, y, col = "red")
+```
+
+The blue and red curves are nearly identical, so this simulation approximates a normal distribution.

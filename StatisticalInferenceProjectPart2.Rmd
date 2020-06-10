@@ -1,0 +1,62 @@
+---
+title: "Statistical Inference Project Part 2"
+author: "Jamison Stevens"
+date: "6/9/2020"
+geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exploratory Data Analysis
+
+This code starts by loading the ToothGrowth data from datasets, then looking at the data contained in ToothGrowth.  The data is then factored by dose, and then boxplots are make for len with respect to supp and len with respect to dose.  The purpose of this is to gain a general understanding of the code before performing an in-depth analysis or manipulating the data.
+
+```{r}
+  library(datasets)
+  data("ToothGrowth")
+  
+  # Perform some basic exploratory data analyses
+  head(ToothGrowth)
+  str(ToothGrowth)
+  
+  # Factor Data by Dose
+  ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+  
+  # Create Boxlots for len with respect to supp and len with respect to dose
+  par(mfrow = c(1,2))
+  boxplot(ToothGrowth$len~ToothGrowth$supp, main = "len vs. supp", xlab = "supp", ylab = "len")
+  boxplot(ToothGrowth$len~ToothGrowth$dose, main = "len vs. dose", xlab = "dose", ylab = "len")
+```
+
+## Summary of Data
+
+This code provides a summary of the ToothGrowth data now that dose has been factored.
+
+```{r}
+  summary(ToothGrowth)
+```
+
+## Comparisons
+
+This code uses a Welch Two Sample T-Test to compare the effect of different values of supp and dose on len.  Since this test is for two samples, the supp data can be used directly in this test.  However, the dose data has three different values, so only two values from dose can be compared at a time. 
+
+```{r}
+  print(t.test(len ~ supp, ToothGrowth))
+  print(t.test(ToothGrowth[ToothGrowth$dose == 1.0, "len"],
+    ToothGrowth[ToothGrowth$dose == 0.5, "len"]))
+  print(t.test(ToothGrowth[ToothGrowth$dose == 2.0, "len"],
+    ToothGrowth[ToothGrowth$dose == 0.5, "len"]))
+  print(t.test(ToothGrowth[ToothGrowth$dose == 2.0, "len"],
+    ToothGrowth[ToothGrowth$dose == 1.0, "len"]))
+```
+
+These tests show that the p-value for the comparison of data from supp is greater than 0.05, and the p-values for the three comparisons of data from dose are less than 0.05.
+
+## Conclusions and Assumptions
+
+Since the p-value for the comparison of data from supp is greater than 0.05, the null hypothesis cannot be rejected.  This means that the type of supplement doesn't impact tooth growth.  One the other hand, the p-values for the three comparisons of data from dose are less than 0.05, the null hypotheses can be rejected.  This means that any increase in dose results in greater tooth growth.
+
+There were several assumptions needed to come to these conclusions.  One assumption is that the data is representative of the entire population.  The data must also follow a normal distribution and be of a reasonably large sample size.  The creation of this sample must also include random selection and random assignment do supplement types and dosages.  We assume that measurements are not paired and variances are not equal.
