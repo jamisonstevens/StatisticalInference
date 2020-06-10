@@ -31,6 +31,8 @@ This program starts by loading the ToothGrowth data from datasets then looking a
   boxplot(ToothGrowth$len~ToothGrowth$dose, main = "len vs. dose", xlab = "dose", ylab = "len")
 ```
 
+The boxplot of len vs. supp shows that the average value for len is lower for VC than OJ, but the range of values for len is greater for VC than OJ.  The boxplot of len vs. dose shows the average, maximum, and minimum values for len increase as dose increases.
+
 ## Summary of Data
 
 This code provides a summary of the ToothGrowth data now that dose has been factored.
