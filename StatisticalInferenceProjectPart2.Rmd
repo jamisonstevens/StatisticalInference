@@ -1,7 +1,7 @@
 ---
 title: "Statistical Inference Project Part 2"
 author: "Jamison Stevens"
-date: "6/9/2020"
+date: "6/10/2020"
 geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
 output: pdf_document
 ---
@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Exploratory Data Analysis
 
-This code starts by loading the ToothGrowth data from datasets, then looking at the data contained in ToothGrowth.  The data is then factored by dose, and then boxplots are make for len with respect to supp and len with respect to dose.  The purpose of this is to gain a general understanding of the code before performing an in-depth analysis or manipulating the data.
+This program starts by loading the ToothGrowth data from datasets then looking at the data contained in ToothGrowth.  The data is factored by dose, and boxplots are made for len with respect to supp and len with respect to dose.  The purpose of this is to gain a general understanding of the code before performing an in-depth analysis or manipulating the data.
 
 ```{r}
   library(datasets)
@@ -57,6 +57,6 @@ These tests show that the p-value for the comparison of data from supp is greate
 
 ## Conclusions and Assumptions
 
-Since the p-value for the comparison of data from supp is greater than 0.05, the null hypothesis cannot be rejected.  This means that the type of supplement doesn't impact tooth growth.  One the other hand, the p-values for the three comparisons of data from dose are less than 0.05, the null hypotheses can be rejected.  This means that any increase in dose results in greater tooth growth.
+Since the p-value for the comparison of data from supp is greater than 0.05, the null hypothesis fails to be rejected.  This means that the type of supplement doesn't impact tooth growth.  One the other hand, the p-values for the three comparisons of data from dose are less than 0.05, the null hypotheses is rejected.  This means that any increase in dose results in greater tooth growth.
 
-There were several assumptions needed to come to these conclusions.  One assumption is that the data is representative of the entire population.  The data must also follow a normal distribution and be of a reasonably large sample size.  The creation of this sample must also include random selection and random assignment do supplement types and dosages.  We assume that measurements are not paired and variances are not equal.
+There were several assumptions needed to come to these conclusions.  One assumption is that the data is representative of the entire population.  The data must also follow a normal distribution and be of a reasonably large sample size.  The creation of this sample must also include random selection and random assignment to supplement types and dosage levels.  We assume that measurements are not paired and variances are not equal.

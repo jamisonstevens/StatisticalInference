@@ -12,11 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-This project involves looking at the exponential distribution in R and comparing it with the Central Limit Theorem.  One thousand simulations will be don’t on the averages of forty exponential distributions.  The sample mean and variance will be compared to their theoretical values, and the distribution will be shown to be approximately normal.
+This project involves looking at the exponential distribution in R and comparing it with the Central Limit Theorem.  One thousand simulations will be done on the averages of forty exponential distributions.  The sample mean and variance will be compared to their theoretical values, and the distribution will be shown to be approximately normal.
 
 ## Simulations
 
-In the simulations code, the constants for the simulations are defined.  Next, the code enters a for loop that executes the code it contains one thousand times.  The code inside the for loop uses rexp to perform one simulation of forty exponential distributions and the mean of the simulation result is put into a numeric vector.  After completing the for loop, the simulation number and result vector are used to create a data frame, named simDF.  The data inside of simDF is then summarized to get an idea of what is contained.
+In the simulations code, the constants for the simulations are defined.  Next, the program enters a for loop that executes the code it contains one thousand times.  The code inside the for loop uses rexp to perform one simulation of forty exponential distributions and the mean of the simulation result is put into a numeric vector.  After completing the for loop, the simulation number and result vector are used to create a data frame, named simDF.  The data inside of simDF is then summarized to get an idea of what is contained.
 
 ```{r}
   # Define Constants
@@ -58,11 +58,11 @@ The first step in this code is calculating the theoretical mean of the exponenti
   paste("Difference in Means:", sampleMean - theoreticalMean)
 ```
 
-The difference between the sample and theoretical means is close to zero, so the simulations approximate the expected value of forty exponential distributions.
+The difference between the sample and theoretical means is close to zero, so the simulations closely approximate the expected value of forty exponential distributions.
 
 ## Sample Variance versus Theoretical Variance
 
-The first step in this code is calculating the theoretical sample standard deviation and variance of the exponential distribution, which is the reciprocal of lambda and reciprocal of lambda squared, respectively.   Next, the theoretical variance is calculated by dividing the theoretical sample variance by the number of exponentials in one simulation.  The sample variance is calculated by finding the variance of each simulation's average value.  After the theoretical and sample variances are calculated, their values are printed, then the difference between the two values is displayed.  The purpose of this comparison is to explore whether the actual and theoretical variabilities of the data are approximately the same.
+The first step in this code is calculating the theoretical sample standard deviation and variance of the exponential distribution, which is the reciprocal of lambda and reciprocal of lambda squared, respectively.   Next, the theoretical variance is calculated by dividing the theoretical sample variance by the number of observations in one simulation.  The sample variance is calculated by finding the variance of the average values for the simulations.  After the theoretical and sample variances are calculated, their values are printed, then the difference between the two values is displayed.  The purpose of this comparison is to explore whether the actual and theoretical variabilities of the data are approximately the same.
 
 ```{r}
   # Theoretical Sample Standard Deviation and Variance
@@ -85,11 +85,11 @@ The first step in this code is calculating the theoretical sample standard devia
   paste("Difference in Variance:", sampleVariance - theoreticalVariance)
 ```
 
-The difference between the sample variance and theoretical variance is close to zero, so the simulations approximate the variance of the expected value of forty exponential distributions.
+The difference between the sample variance and theoretical variance is close to zero, so the simulations closely approximate the variance of the expected value of forty exponential distributions.
 
 ## Distribution
 
-This code creates a histogram of average value for each simulation that shows the frequency in terms of density.  Using lines, two curves were added to the graph: a blue density curve of the simulations and a red density curve for the expected distribution.
+This code creates a histogram of average value for each simulation that shows the frequency in terms of density.  Using lines, two curves were added to the graph: a blue density curve for the simulations and a red density curve for the expected distribution.
 
 ```{r}
   # Show Distribution is Approximately Normal
@@ -102,4 +102,4 @@ This code creates a histogram of average value for each simulation that shows th
   lines(x, y, col = "red")
 ```
 
-The blue and red curves are nearly identical, so this simulation approximates a normal distribution.
+The blue and red curves are nearly identical, meaning the sample simulation approximates a normal distribution.
